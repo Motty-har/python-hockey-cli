@@ -6,6 +6,7 @@ from models.positions import Position
 def seed_database():
     Position.drop_table()
     Position.create_table()
+    Position.create("Center", "Offense")
 
 
 seed_database()

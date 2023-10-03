@@ -10,7 +10,7 @@ class Position():
         self.type = type
 
     def __repr__(self):
-        return f"<{self.id}: Pos: {self.position}, Type: {self.type}>"
+        return f"<{self.id}: Position: {self.position}, Type: {self.type}>"
     
     @property
     def position(self):
@@ -58,7 +58,7 @@ class Position():
         """
         CURSOR.execute(sql)
         CONN.commit()
-        
+
 
     def save(self):
         """ Insert a new row with the position and type values of the current Positions instance.
@@ -81,4 +81,30 @@ class Position():
         pos = cls(position, type)
         pos.save()
         return pos
+    
+    @classmethod
+    def instance_from_db(cls, row):
+        """Return a Position object having the attribute values from the table row."""
+
+        pos = cls.all.get(row[0])
+        if pos:
+            pos.position = row[1]
+            pos.type = row[2]
+        else:
+            pos = cls(row[1], row[2])
+            pos.id = row[0]
+            cls.all[pos.id] = pos
+        return pos
+
+    @classmethod
+    def get_all(cls):
+        """Return a list containing a Department object per row in the table"""
+        sql = """
+            SELECT *
+            FROM positions
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
+        all_rows = [cls.instance_from_db(row) for row in rows] 
+        return all_rows
     
