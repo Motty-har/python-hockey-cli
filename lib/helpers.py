@@ -5,6 +5,12 @@ def list_positions():
     for position in positions:
         print(position)
 
+def add_position():
+    position = input("Please enter the position: ")
+    type = input("Please enter the position type: ")
+    position = Position.create(position, type)
+    print(f'Success: {position}')
+
 def exit_program():
     print("Goodbye!")
     exit()
