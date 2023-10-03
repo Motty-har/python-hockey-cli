@@ -120,3 +120,13 @@ class Position():
         row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
+    def update(self):
+        """Update the table row corresponding to the current Position instance."""
+        sql = """
+            UPDATE positions
+            SET position = ?, type = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.position, self.type, self.id))
+        CONN.commit()
+    
