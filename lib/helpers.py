@@ -11,6 +11,12 @@ def add_position():
     position = Position.create(position, type)
     print(f'Success: {position}')
 
+def update_position():
+    pass
+
+def delete_position():
+    pass
+
 def exit_program():
     print("Goodbye!")
     exit()
