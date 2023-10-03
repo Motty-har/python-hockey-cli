@@ -39,13 +39,22 @@ class Position():
             )
     
     @classmethod
+    def drop_table(cls):
+        """ Drop the table that persists Position instances """
+        sql = """
+            DROP TABLE IF EXISTS positions;
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
+    
+    @classmethod
     def create_table(cls):
         """ Create a new table to persist the attributes of Position instances """
         sql = """
             CREATE TABLE IF NOT EXISTS positions (
             id INTEGER PRIMARY KEY,
             position TEXT,
-            type Text)
+            type Text)  
         """
         CURSOR.execute(sql)
         CONN.commit()

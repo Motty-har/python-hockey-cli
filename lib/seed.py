@@ -4,7 +4,8 @@ from models.__init__ import CONN, CURSOR
 from models.positions import Position
 
 def seed_database():
-    Position.create_table
+    Position.drop_table()
+    Position.create_table()
 
 
 seed_database()
