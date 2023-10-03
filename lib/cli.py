@@ -1,5 +1,6 @@
 from helpers import (
     exit_program,
+    list_positions,
 )
 
 
@@ -7,9 +8,10 @@ def main():
     while True:
         menu()
         choice = input("> ")
-        if choice is "E":#how to do upercase and lowercase
+        if choice == "E":#how to do upercase and lowercase
             exit_program()
-        elif choice is "P":
+        elif choice == "P":
+            list_positions()
             positions_submenu()
         else:
             print("Invalid choice")
@@ -17,7 +19,8 @@ def main():
 
 def menu():
     print("Please select an option:")
-    print("Type E to exit the program")
+    print("Type E to exit the program:")
+    print("Type P to view positions:")
 
 def positions_submenu():
     print("Type B to go back")#need help with this
