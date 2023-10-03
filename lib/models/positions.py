@@ -38,8 +38,6 @@ class Position():
                 "Type must be a non-empty string"
             )
     
-    
-    
     @classmethod
     def create_table(cls):
         """ Create a new table to persist the attributes of Position instances """
