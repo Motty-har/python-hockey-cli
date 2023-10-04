@@ -5,6 +5,9 @@ def list_positions():
     for position in positions:
         print(position)
 
+def view_by_position():
+    pass
+
 def add_position():
     position = input("Please enter the position: ")
     type = input("Please enter the position type: ")
@@ -34,6 +37,33 @@ def delete_position():
         print(f'Position {id_} deleted')
     else:
         print(f'Postion {id_} not found')
+
+def list_players():
+    pass
+
+def add_player():
+    pass
+
+def update_player():
+    pass
+
+def delete_player():
+    pass
+
+def find_player_by_name():
+    pass
+
+def view_players_by_position():
+    pass
+
+def goals_leaders():
+    pass
+
+def assists_leaders():
+    pass
+
+def go_back():
+    pass
 
 def exit_program():
     print("Goodbye!")
