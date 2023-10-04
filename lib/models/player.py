@@ -2,6 +2,9 @@ from models.__init__ import CURSOR, CONN
 from models.positions import Position
 
 class Player():
+    
+    all = {}
+    
     def __init__(self, name, number, goals, assists, position_id, id=None):
         self.id = id
         self.name = name
@@ -35,7 +38,7 @@ class Player():
     
     @number.setter
     def number(self, number):
-        if isinstance(number, int) and len(number):
+        if isinstance(number, int):
             self._number = number
         else:
             raise ValueError(
@@ -48,7 +51,7 @@ class Player():
     
     @goals.setter
     def goals(self, goals):
-        if isinstance(goals, int) and len(goals):
+        if isinstance(goals, int):
             self._goals = goals
         else:
             raise ValueError(
@@ -61,7 +64,7 @@ class Player():
     
     @assists.setter
     def assists(self, assists):
-        if isinstance(assists, int) and len(assists):
+        if isinstance(assists, int):
             self._assists = assists
         else:
             raise ValueError(
@@ -104,3 +107,25 @@ class Player():
         """
         CURSOR.execute(sql)
         CONN.commit()
+    
+    def save(self):
+        """ Insert a new row with the name, number, goals, assists, and position id values of the current Player object.
+        Update object id attribute using the primary key value of new row.
+        Save the object in local dictionary using table row's PK as dictionary key"""
+        sql = """
+                INSERT INTO players (name, number, goals, assists, position_id)
+                VALUES (?, ?, ?, ?, ?)
+        """
+
+        CURSOR.execute(sql, (self.name, self.number, self.goals, self.assists, self.position_id))
+        CONN.commit()
+
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
+    
+    @classmethod
+    def create(cls, name, number, goals, assists, position_id):
+        """ Initialize a new Player instance and save the object to the database """
+        player = cls(name, number, goals, assists, position_id)
+        player.save()
+        return player

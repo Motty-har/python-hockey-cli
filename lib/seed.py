@@ -10,6 +10,7 @@ def seed_database():
     Position.create_table()
     Position.create("Center", "Offense")
     Player.create_table()
+    Player.create("Motty", 93, 4, 7, 1)
 
 
 seed_database()
