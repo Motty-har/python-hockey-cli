@@ -15,7 +15,7 @@ class Player():
 
     def __repr__(self):
         return (
-            f"<Employee {self.id}: Name: {self.name}, #: {self.number}, Goals: {self.goals}, Assists: {self.assists} " +
+            f"<Employee {self.id}: Name: {self.name}, #: {self.number}, Goals: {self.goals}, Assists: {self.assists}, " +
             f"Position ID: {self.position_id}>"
         )
 
@@ -129,3 +129,32 @@ class Player():
         player = cls(name, number, goals, assists, position_id)
         player.save()
         return player
+    
+    @classmethod
+    def instance_from_db(cls, row):
+        """Return a Player object having the attribute values from the table row."""
+
+        player = cls.all.get(row[0])
+        if player:
+            player.name = row[1]
+            player.number = row[2]
+            player.goals = row[3]
+            player.assists = row[4]
+            player.position_id = row[5]
+        else:
+            player = cls(row[1], row[2], row[3], row[4], row[5])
+            player.id = row[0]
+            cls.all[player.id] = player
+        return player   
+    
+    @classmethod
+    def get_all(cls):
+        """Return a list containing one Player object per table row"""
+        sql = """
+            SELECT *
+            FROM players
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]
