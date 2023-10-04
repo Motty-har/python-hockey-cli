@@ -12,7 +12,7 @@ def add_position():
     print(f'Success: {position}')
 
 def update_position():#need help with this function
-    id_ = input("Enter the position id: ")
+    id_ = input("Enter the position's id: ")
     if pos := Position.find_by_id(id_):
         try:
             position = input("Enter the updated position: ")
@@ -28,7 +28,12 @@ def update_position():#need help with this function
         print(f'Position ({id_} not found)')
 
 def delete_position():
-    pass
+    id_ = input("Enter the position's id: ")
+    if position := Position.find_by_id(id_):
+        position.delete()
+        print(f'Position {id_} deleted')
+    else:
+        print(f'Postion {id_} not found')
 
 def exit_program():
     print("Goodbye!")
