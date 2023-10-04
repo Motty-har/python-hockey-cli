@@ -89,14 +89,14 @@ class Player():
             name TEXT,
             number INTEGER,
             goals INTEGER,
-            assists INTEGER
-            player_id INTEGER,
-            FOREIGN KEY (player_id) REFERENCES positions(id))
+            assists INTEGER,
+            position_id INTEGER,
+            FOREIGN KEY (position_id) REFERENCES positions(id))
         """
         CURSOR.execute(sql)
         CONN.commit()
 
-    classmethod
+    @classmethod
     def drop_table(cls):
         """ Drop the table that persists Player instances """
         sql = """
