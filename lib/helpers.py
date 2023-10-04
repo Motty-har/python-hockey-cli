@@ -1,4 +1,5 @@
 from models.positions import Position
+from models.player import Player
 
 def list_positions():
     positions = Position.get_all()
@@ -39,7 +40,9 @@ def delete_position():
         print(f'Postion {id_} not found')
 
 def list_players():
-    pass
+    players = Player.get_all()
+    for player in players:
+        print(player)
 
 def add_player():
     pass
@@ -51,9 +54,6 @@ def delete_player():
     pass
 
 def find_player_by_name():
-    pass
-
-def view_players_by_position():
     pass
 
 def goals_leaders():

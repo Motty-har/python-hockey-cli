@@ -79,3 +79,28 @@ class Player():
         else:
             raise ValueError(
                 "position_id must reference a department in the database")
+    
+    @classmethod
+    def create_table(cls):
+        """ Create a new table to persist the attributes of Player instances """
+        sql = """
+            CREATE TABLE IF NOT EXISTS players (
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            number INTEGER,
+            goals INTEGER,
+            assists INTEGER
+            player_id INTEGER,
+            FOREIGN KEY (player_id) REFERENCES positions(id))
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
+
+    classmethod
+    def drop_table(cls):
+        """ Drop the table that persists Player instances """
+        sql = """
+            DROP TABLE IF EXISTS players;
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
