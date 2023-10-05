@@ -145,3 +145,15 @@ class Player():
         del type(self).all[self.id]
 
         self.id = None
+
+    @classmethod
+    def find_by_name(cls, name):
+        """Return Player object corresponding to first table row matching specified name"""
+        sql = """
+            SELECT *
+            FROM players
+            WHERE name is ?
+        """
+
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None

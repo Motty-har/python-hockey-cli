@@ -1,7 +1,7 @@
 from helpers import (
     exit_program,
     list_positions,
-    view_by_position,
+    view_players_by_position,
     add_position,
     update_position,
     delete_position,
@@ -11,6 +11,7 @@ from helpers import (
     delete_player,
     goals_leaders,
     assists_leaders,
+    find_player_by_name,
     go_back
 )
 
@@ -28,7 +29,7 @@ def main():
             if choice == "B":
                 go_back()
             elif choice == "V":
-                view_by_position()
+                view_players_by_position()
             elif choice == "H":
                 handle_positions()
                 choice = input("> ")
@@ -57,7 +58,9 @@ def main():
         elif choice == "S":
             view_stats()
             choice = input("> ")
-            if choice == "G":
+            if choice == "P":
+                find_player_by_name()
+            elif choice == "G":
                 goals_leaders()
             elif choice == "A":
                 assists_leaders()
@@ -95,6 +98,7 @@ def players_submenu():
 
 def view_stats():
     print("Type B to go back")
+    print("Type P to view by player")
     print("Type G to view goals leaders:")
     print("Type A to view assists leaders")
 

@@ -6,8 +6,8 @@ def list_positions():
     for position in positions:
         print(position)
 
-def view_by_position():
-    pass
+def view_players_by_position():
+   pass
 
 def add_position():
     position = input("Please enter the position: ")
@@ -87,7 +87,11 @@ def delete_player():
         print(f'Player {id_} not found')
 
 def find_player_by_name():
-    pass
+    name = input("Enter the players name: ")
+    player = Player.find_by_name(name)
+    print(player) if player else(
+        print(f'{name} not found')
+    )
 
 def goals_leaders():
     pass
