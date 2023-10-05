@@ -49,7 +49,7 @@ def main():
             if choice == "A":
                 add_player()
             elif choice == "U":
-                update_player
+                update_player()
             elif choice == "D":
                 delete_player()
             else:

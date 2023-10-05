@@ -15,61 +15,9 @@ class Player():
 
     def __repr__(self):
         return (
-            f"<Employee {self.id}: Name: {self.name}, #: {self.number}, Goals: {self.goals}, Assists: {self.assists}, " +
+            f"<Player {self.id}: Name: {self.name}, #{self.number}, Goals: {self.goals}, Assists: {self.assists}, " +
             f"Position ID: {self.position_id}>"
         )
-
-    @property
-    def name(self):
-        return self._name
-    
-    @name.setter
-    def name(self, name):
-        if isinstance(name, str) and len(name):
-            self._name = name
-        else:
-            raise ValueError(
-                "Name must be a non-empty string"
-            )
-    
-    @property
-    def number(self):
-        return self._number
-    
-    @number.setter
-    def number(self, number):
-        if isinstance(number, int):
-            self._number = number
-        else:
-            raise ValueError(
-                "Number must be a number"
-            )
-    
-    @property
-    def goals(self):
-        return self._goals
-    
-    @goals.setter
-    def goals(self, goals):
-        if isinstance(goals, int):
-            self._goals = goals
-        else:
-            raise ValueError(
-                "Goals must be a number"
-            )
-    
-    @property
-    def assists(self):
-        return self._assists
-    
-    @assists.setter
-    def assists(self, assists):
-        if isinstance(assists, int):
-            self._assists = assists
-        else:
-            raise ValueError(
-                "Assists must be a number"
-            )
     
     @property
     def position_id(self):
@@ -158,3 +106,42 @@ class Player():
         rows = CURSOR.execute(sql).fetchall()
 
         return [cls.instance_from_db(row) for row in rows]
+    
+    @classmethod
+    def find_by_id(cls, id):
+        """Return Player object corresponding to the table row matching the specified primary key"""
+        sql = """
+            SELECT *
+            FROM players
+            WHERE id = ?
+        """
+
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
+    def update(self):
+        """Update the table row corresponding to the current Player instance."""
+        sql = """
+            UPDATE players
+            SET name = ?, number = ?, goals = ?, assists = ?, position_id = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.name, self.number, self. goals, self.assists,
+                             self.position_id, self.id))
+        CONN.commit()
+
+    def delete(self):
+        """Delete the table row corresponding to the current PLayer instance,
+        delete the dictionary entry, and reassign id attribute"""
+
+        sql = """
+            DELETE FROM players
+            WHERE id = ?
+        """
+
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+        del type(self).all[self.id]
+
+        self.id = None

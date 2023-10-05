@@ -45,13 +45,46 @@ def list_players():
         print(player)
 
 def add_player():
-    pass
+    name = input("Enter the player's name: ")
+    number = input("Enter the player's number: ")
+    goals = input("Enter the players goal total: ")
+    assists = input("Enter the players assist total: ")
+    position_id = int(input("Enter the player's position id:"))
+    try:
+        player = Player.create(name, number, goals, assists, position_id)
+        print(f'Success: {player}')
+    except Exception as exc:
+        print("Error creating player: ", exc)
 
 def update_player():
-    pass
+    id_ = input("Enter the players id: ")
+    if player := Player.find_by_id(id_):
+        try:
+            name = input("Enter the players new name: ")
+            player.name = name
+            number = input("Enter players new number: ")
+            player.number = number
+            goals = input("Enter the players new goal total: ")
+            player.goals = goals 
+            assists = input("Enter the players assist total: ")
+            player.assists = assists
+            position_id = int(input("Enter employees new position id: "))
+            player.position_id = position_id
+            
+            player.update()
+            print(f"Success: {player}")
+        except Exception as exc:
+            print('Error updating player:', exc)
+    else:
+        print(f'Employee {id_} not found')
 
 def delete_player():
-    pass
+    id_ = input("Enter the players's id: ")
+    if player := Player.find_by_id(id_):
+        player.delete()
+        print(f'Player {id_} deleted')
+    else:
+        print(f'Player {id_} not found')
 
 def find_player_by_name():
     pass
