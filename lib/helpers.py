@@ -7,7 +7,12 @@ def list_positions():
         print(position)
 
 def view_players_by_position():
-   pass
+    id_ = input("Enter the position id: ")
+    if player := Position.find_by_id(id_):
+        for player in Position.players(player):
+            print(player)
+    else:
+        print(f'Position {id_} not found')
 
 def add_position():
     position = input("Please enter the position: ")

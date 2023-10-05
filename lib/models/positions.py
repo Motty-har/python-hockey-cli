@@ -147,4 +147,18 @@ class Position():
 
         # Set the id to None
         self.id = None
+
+    def players(self):
+        """Return list of players associated with current position"""
+        from models.player import Player
+        sql = """
+            SELECT * FROM players
+            WHERE position_id = ?
+        """
+        CURSOR.execute(sql, (self.id,),)
+
+        rows = CURSOR.fetchall()
+        return [
+            Player.instance_from_db(row) for row in rows
+        ]
     
