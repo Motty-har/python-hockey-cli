@@ -1,79 +1,79 @@
 from models.positions import Position
 from models.player import Player
 
+positions = Position.get_all()
+players = Player.get_all()
+#what is usefor find by id_
 def list_positions():
-    positions = Position.get_all()
-    for position in positions:
-        print(position)
+    for index, position in enumerate(positions):
+        print(f"{index + 1}. {position.position}, {position.type}")
 
 def view_players_by_position():
-    id_ = input("Enter the position id: ")
-    if player := Position.find_by_id(id_):
-        for player in Position.players(player):
-            print(player)
+    num = input("Enter the number of the position: ")
+    if player := positions[int(num) - 1]:
+        for index, player in enumerate(Position.players(player)):
+            print(f'{index + 1}. Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}')
     else:
-        print(f'Position {id_} not found')
-
+        print(f'Position {num} not found')
+#doesnt add to the position list right away
 def add_position():
     position = input("Please enter the position: ")
     type = input("Please enter the position type: ")
     position = Position.create(position, type)
-    print(f'Success: {position}')
+    print(f'Success: Position: {position.position}, Type: {position.type}')
 
 def update_position():#need help with this function
-    id_ = input("Enter the position's id: ")
-    if pos := Position.find_by_id(id_):
+    num = input("Enter the number of the position: ")
+    if pos := positions[int(num) - 1]:
         try:
             position = input("Enter the updated position: ")
             pos.position = position
-            type = input("Enter the position type: ")
-            position.type = type
-
+            type = input("Enter the updated position type: ")
+            pos.type = type
             pos.update()
-            print(f'Success: {pos}')
+            print(f'Success: {pos.position, pos.type}')
         except Exception as exc:#what is the functinality of this
             print("Error updating position: ", exc)
     else:
-        print(f'Position ({id_} not found)')
+        print(f'Position {num} not found)')
 
 def delete_position():
-    id_ = input("Enter the position's id: ")
-    if position := Position.find_by_id(id_):
+    num = input("Enter the position's number: ")
+    if position := positions[int(num) - 1]:
         position.delete()
-        print(f'Position {id_} deleted')
+        print(f'Position {num} deleted')
     else:
-        print(f'Postion {id_} not found')
+        print(f'Postion {num} not found')
 
 def list_players():
-    players = Player.get_all()
-    for player in players:
-        print(player)
+    for index, player in enumerate(players):
+        print(f'{index + 1}. Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}') #want to write out the players position
 
 def add_player():
     name = input("Enter the player's name: ")
-    number = input("Enter the player's number: ")
-    goals = input("Enter the players goal total: ")
-    assists = input("Enter the players assist total: ")
-    position_id = int(input("Enter the player's position id:"))
+    number = int(input("Enter the player's number: "))
+    goals = int(input("Enter the players goal total: "))
+    assists = int(input("Enter the players assist total: "))
+    position_id = int(input("Enter the player's position number: "))
     try:
-        player = Player.create(name, number, goals, assists, position_id)
-        print(f'Success: {player}')
+        player = Player.create(name, number, goals, assists, positions[position_id - 1].id)
+        print(f'Success: Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}')
     except Exception as exc:
         print("Error creating player: ", exc)
 
 def update_player():
-    id_ = input("Enter the players id: ")
-    if player := Player.find_by_id(id_):
+    id_ = int(input("Enter the number of the player: "))
+    if player := players[id_ -1]:
         try:
-            name = input("Enter the players new name: ")
+            name = input("Enter the players updates name: ")
             player.name = name
-            number = input("Enter players new number: ")
+            number = input("Enter players updated number: ")
             player.number = number
             goals = input("Enter the players new goal total: ")
             player.goals = goals 
-            assists = input("Enter the players assist total: ")
+            assists = input("Enter the players new assist total: ")
             player.assists = assists
-            position_id = int(input("Enter employees new position id: "))
+            position_id = int(input("Enter the position number: "))
             player.position_id = position_id
             
             player.update()
@@ -81,20 +81,20 @@ def update_player():
         except Exception as exc:
             print('Error updating player:', exc)
     else:
-        print(f'Employee {id_} not found')
+        print(f'Player {id_} not found')
 
 def delete_player():
-    id_ = input("Enter the players's id: ")
-    if player := Player.find_by_id(id_):
+    num = input("Enter the players's number: ")
+    if player := players[int(num) - 1]:
         player.delete()
-        print(f'Player {id_} deleted')
+        print(f'Player {num} deleted')
     else:
-        print(f'Player {id_} not found')
+        print(f'Player {num} not found')
 
 def find_player_by_name():
     name = input("Enter the players name: ")
     player = Player.find_by_name(name)
-    print(player) if player else(
+    print(f'Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}') if player else(
         print(f'{name} not found')
     )
 

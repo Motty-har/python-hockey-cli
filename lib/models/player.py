@@ -20,6 +20,58 @@ class Player():
         )
     
     @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, name):
+        if isinstance(name, str) and len(name):
+            self._name = name
+        else:
+            raise ValueError(
+                "Name must be a non-empty string"
+            )
+    
+    @property
+    def number(self):
+        return self._number
+    
+    @number.setter
+    def number(self, number):
+        if isinstance(number, int):
+            self._number = number
+        else:
+            raise ValueError(
+                "Number must be a number"
+            )
+    
+    @property
+    def goals(self):
+        return self._goals
+    
+    @goals.setter
+    def goals(self, goals):
+        if isinstance(goals, int):
+            self._goals = goals
+        else:
+            raise ValueError(
+                "Goals must be a number"
+            )
+    
+    @property
+    def assists(self):
+        return self._assists
+    
+    @assists.setter
+    def assists(self, assists):
+        if isinstance(assists, int):
+            self._assists = assists
+        else:
+            raise ValueError(
+                "Assists must be a number"
+            )
+    
+    @property
     def position_id(self):
         return self._position_id
     
