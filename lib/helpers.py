@@ -3,18 +3,47 @@ from models.player import Player
 
 positions = Position.get_all()
 players = Player.get_all()
-#what is usefor find by id_
+
 def list_positions():
     for index, position in enumerate(positions):
         print(f"{index + 1}. {position.position}, {position.type}")
 
-def view_players_by_position():
+def view_players_by_position(position_submenu):
     num = input("Enter the number of the position: ")
     if player := positions[int(num) - 1]:
         for index, player in enumerate(Position.players(player)):
             print(f'{index + 1}. Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}')
     else:
         print(f'Position {num} not found')
+    
+    handle_in_positions(num, position_submenu)
+
+def handle_in_positions(num, position_submenu):
+    while True:
+        inside_positions()
+        choice = input("> ")
+        if choice == "A":
+            add_in_position(num)
+        if choice == "B":
+            position_submenu()
+        else:
+            print("Invalid choice")
+
+def add_in_position(num):
+    name = input("Enter the player's name: ")
+    number = int(input("Enter the player's number: "))
+    goals = int(input("Enter the players goal total: "))
+    assists = int(input("Enter the players assist total: "))
+    try:
+        player = Player.create(name, number, goals, assists, positions[int(num) - 1].id)
+        print(f'Success: Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}')
+    except Exception as exc:
+        print("Error creating player: ", exc)
+
+def inside_positions():
+    print("Type A to add a player in this position")
+    print("Type B to go back")
+
 #doesnt add to the position list right away
 def add_position():
     position = input("Please enter the position: ")
@@ -22,7 +51,7 @@ def add_position():
     position = Position.create(position, type)
     print(f'Success: Position: {position.position}, Type: {position.type}')
 
-def update_position():#need help with this function
+def update_position():
     num = input("Enter the number of the position: ")
     if pos := positions[int(num) - 1]:
         try:
@@ -60,6 +89,9 @@ def add_player():
         print(f'Success: Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}')
     except Exception as exc:
         print("Error creating player: ", exc)
+
+def add_player_in_positoin():
+    pass
 
 def update_player():
     id_ = int(input("Enter the number of the player: "))
@@ -102,9 +134,6 @@ def goals_leaders():
     pass
 
 def assists_leaders():
-    pass
-
-def go_back():
     pass
 
 def exit_program():
