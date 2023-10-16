@@ -44,7 +44,7 @@ def handle_positions():
        positions_submenu()
        choice = input("> ")
        if choice == "V":
-            view_players_by_position(positions_submenu)   
+            view_players_by_position(handle_positions)   
        elif choice == "H":
             crud_positions()
        elif choice == "B":

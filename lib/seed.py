@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from models.__init__ import CONN, CURSOR
-from models.positions import Position
+from models.position import Position
 from models.player import Player
 
 def seed_database():

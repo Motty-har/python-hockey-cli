@@ -1,14 +1,14 @@
-from models.positions import Position
+from models.position import Position
 from models.player import Player
 
 positions = Position.get_all()
 players = Player.get_all()
 
 def list_positions():
-    for index, position in enumerate(positions):
+    for index, position in enumerate(Position.get_all()):
         print(f"{index + 1}. {position.position}, {position.type}")
 
-def view_players_by_position(position_submenu):
+def view_players_by_position(handle_positions):
     num = input("Enter the number of the position: ")
     if player := positions[int(num) - 1]:
         for index, player in enumerate(Position.players(player)):
@@ -16,18 +16,19 @@ def view_players_by_position(position_submenu):
     else:
         print(f'Position {num} not found')
     
-    handle_in_positions(num, position_submenu)
+    handle_in_positions(num, handle_positions)
 
-def handle_in_positions(num, position_submenu):
+def handle_in_positions(num, handle_positions):
     while True:
         inside_positions()
         choice = input("> ")
         if choice == "A":
             add_in_position(num)
-        if choice == "B":
-            position_submenu()
+        elif choice == "B":
+            handle_positions()
         else:
-            print("Invalid choice")
+            pass
+        
 
 def add_in_position(num):
     name = input("Enter the player's name: ")
@@ -131,8 +132,12 @@ def find_player_by_name():
     )
 
 def goals_leaders():
-    pass
-
+    players = Player.get_all()
+    goal_leader = sorted(players, key=lambda player: player.goals, reverse=True)
+    num = 1
+    for player in goal_leader:
+        print(f'{num}. Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}')
+        num += 1
 def assists_leaders():
     pass
 

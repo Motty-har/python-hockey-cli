@@ -1,5 +1,5 @@
 from models.__init__ import CURSOR, CONN
-from models.positions import Position
+from models.position import Position
 
 class Player():
     
