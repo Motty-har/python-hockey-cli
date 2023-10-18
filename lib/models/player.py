@@ -171,6 +171,18 @@ class Player():
         row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
+    @classmethod
+    def find_by_position_id(cls, id):
+        """Return Player object corresponding to the table row matching the specified primary key"""
+        sql = """
+            SELECT *
+            FROM players
+            WHERE position_id = ?
+        """
+
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
     def update(self):
         """Update the table row corresponding to the current Player instance."""
         sql = """
@@ -198,6 +210,21 @@ class Player():
 
         self.id = None
 
+    def delete_by_position(self):
+        """Delete the table row corresponding to the current Player instance,
+        delete the dictionary entry, and reassign id attribute"""
+
+        sql = """
+            DELETE FROM players
+            WHERE position_id = ?
+        """
+
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+        del type(self).all[self.id]
+
+        self.id = None
     @classmethod
     def find_by_name(cls, name):
         """Return Player object corresponding to first table row matching specified name"""

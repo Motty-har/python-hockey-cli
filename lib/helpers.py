@@ -61,23 +61,26 @@ def update_position():
             type = input("Enter the updated position type: ")
             pos.type = type
             pos.update()
-            print(f'Success: {pos.position, pos.type}')
-        except Exception as exc:#what is the functinality of this
+            print(f'Success: Position: {pos.position}, Type: {pos.type}')
+        except Exception as exc:
             print("Error updating position: ", exc)
     else:
         print(f'Position {num} not found)')
 
 def delete_position():
+    print("Warning: Deleting the position will also delete the players that play it!")
     num = input("Enter the position's number: ")
     if position := positions[int(num) - 1]:
-        position.delete()
-        print(f'Position {num} deleted')
+        if player := Player.find_by_position_id(position.id):
+            player.delete()
+            position.delete()
+            print(f'Position {num} deleted')
     else:
         print(f'Postion {num} not found')
 
 def list_players():
     for index, player in enumerate(players):
-        print(f'{index + 1}. Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}') #want to write out the players position
+        print(f'{index + 1}. Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}')
 
 def add_player():
     name = input("Enter the player's name: ")
@@ -90,9 +93,6 @@ def add_player():
         print(f'Success: Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}')
     except Exception as exc:
         print("Error creating player: ", exc)
-
-def add_player_in_positoin():
-    pass
 
 def update_player():
     id_ = int(input("Enter the number of the player: "))
@@ -110,7 +110,7 @@ def update_player():
             player.position_id = position_id
             
             player.update()
-            print(f"Success: {player}")
+            print(f'Success: Name: {player.name}, #{player.number}, Goals: {player.goals}, Assists: {player.assists}')
         except Exception as exc:
             print('Error updating player:', exc)
     else:
