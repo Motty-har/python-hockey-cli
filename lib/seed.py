@@ -11,8 +11,8 @@ def seed_database():
     Position.create("Center", "Offense")
     Position.create("Left Defense", "Defense")
     Player.create_table()
-    Player.create("Jack Eichel", 9, 31, 92, 1)
-    Player.create("Shea Theodore", 23, 22, 84, 2)
+    Player.create("Matt", 9, 31, 92, 1)
+    Player.create("Jim", 23, 22, 84, 2)
 
 
 seed_database()

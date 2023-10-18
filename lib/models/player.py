@@ -81,7 +81,7 @@ class Player():
             self._position_id = position_id
         else:
             raise ValueError(
-                "position_id must reference a department in the database")
+                "position_id must reference a position in the database")
     
     @classmethod
     def create_table(cls):
